@@ -6,6 +6,13 @@ mod employees;
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     dotenv::dotenv().ok();
+
+    println!(
+        "Current Host: {}:{}",
+        std::env::var("HOST").unwrap(),
+        std::env::var("PORT").unwrap()
+    );
+
     db::init();
     let mut listenfd = listenfd::ListenFd::from_env();
     let mut server = HttpServer::new(|| App::new().configure(employees::init_routes));
